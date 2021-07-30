@@ -22,21 +22,26 @@ export default function (state = initialState, action) {
         loading: true,
       };
     case GET_HOUSES:
+      let obj = new Set();
+      const uniqueHouses = payload
+        .map((item) => {
+          return {
+            id: item.houseId,
+            building: item.building,
+            corpus: item?.corpus,
+          };
+        })
+        .filter((item) => {
+          if (obj.has(`${item.building}${item?.corpus}`)) {
+            return false;
+          }
+          obj.add(`${item.building}${item?.corpus}`);
+          return true;
+        });
+
       return {
         ...state,
-        house: null,
-        houses: payload
-          .map((item) => {
-            return {
-              id: item.houseId,
-              building: item.building,
-              corpus: item?.corpus,
-            };
-          })
-          .filter(
-            (v, i, a) =>
-              a.findIndex((t) => JSON.stringify(t) === JSON.stringify(v)) === i
-          ),
+        houses: uniqueHouses,
         loading: false,
       };
     case TOGGLE_HOUSE:
@@ -53,31 +58,3 @@ export default function (state = initialState, action) {
       return state;
   }
 }
-/* payload.reduce((objectsByKeyValue, obj) => {
-  const value = obj["streetId"];
-  objectsByKeyValue[value] = (objectsByKeyValue[value] || []).concat(
-    obj
-  );
-  return objectsByKeyValue;
-}, {}), */
-
-/* payload.forEach(function (item) {
-  var i = resArr.findIndex((x) => x.name == item.name);
-  if (i <= -1) {
-    resArr.push({ id: item.id, name: item.name });
-  }
-}), */
-
-/* streets: [
-  ...new Map(
-    payload
-      .map((item) => [item["streetId"], item["streetName"]])
-      .values()
-  ),
-],
-buildings: [
-  ...new Map(
-    payload.map((item) => [item["houseId"], item["building"]]).values()
-  ),
-],
-flats: [...new Map(payload.map((item) => [item["houseId"]]).values())], */

@@ -24,7 +24,6 @@ export default function (state = initialState, action) {
     case GET_COMPANIES:
       return {
         ...state,
-        company: null,
         companies: payload,
         loading: false,
       };

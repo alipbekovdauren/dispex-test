@@ -39,7 +39,6 @@ const CreateFlatClientForm = ({ flat }) => {
       Email: email,
       Phone: phone,
       addressId: flat.addressId,
-      houseId: flat.houseId,
     };
 
     setLoading(true);

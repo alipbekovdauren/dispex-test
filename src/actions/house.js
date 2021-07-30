@@ -14,7 +14,7 @@ export const getHouses = (data) => async (dispatch) => {
     });
 
     const response = await fetch(
-      `${url}/HousingStock?companyId=${data.companyId}&streetId=${data.streetId}`
+      `${url}/HousingStock?streetId=${data.streetId}`
     );
     const houses = await response.json();
 

@@ -15,9 +15,7 @@ export const getFlats = (data) => async (dispatch) => {
       type: FLAT_LOADING,
     });
 
-    const response = await fetch(
-      `${url}/HousingStock?companyId=${data.companyId}&streetId=${data.streetId}&houseId=${data.houseId}`
-    );
+    const response = await fetch(`${url}/HousingStock?houseId=${data.houseId}`);
     const flats = await response.json();
 
     dispatch({
@@ -62,7 +60,6 @@ export const createFlatClient = (data) => async (dispatch) => {
     result = await response.json();
 
     const payloadData = {
-      houseId: data.houseId,
       addressId: data.addressId,
       client: result,
     };

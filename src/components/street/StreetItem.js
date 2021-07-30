@@ -8,12 +8,10 @@ import HouseList from "../house/HouseList";
 
 const StreetItem = ({ street }) => {
   const dispatch = useDispatch();
-  const selectedCompany = useSelector((state) => state.company.selectedCompany);
   const selectedStreet = useSelector((state) => state.street.selectedStreet);
 
   const onStreetClickHandler = (street) => {
     let data = {
-      companyId: selectedCompany,
       streetId: street.id,
     };
 

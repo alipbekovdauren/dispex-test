@@ -22,20 +22,25 @@ export default function (state = initialState, action) {
         loading: true,
       };
     case GET_STREETS:
+      let obj = new Set();
+      const uniqueStreets = payload
+        .map((item) => {
+          return {
+            id: item.streetId,
+            name: item.streetName,
+          };
+        })
+        .filter((item) => {
+          if (obj.has(item.id)) {
+            return false;
+          }
+          obj.add(item.id);
+          return true;
+        });
+
       return {
         ...state,
-        street: null,
-        streets: payload
-          .map((item) => {
-            return {
-              id: item.streetId,
-              name: item.streetName,
-            };
-          })
-          .filter(
-            (v, i, a) =>
-              a.findIndex((t) => JSON.stringify(t) === JSON.stringify(v)) === i
-          ),
+        streets: uniqueStreets,
         loading: false,
       };
     case TOGGLE_STREET:

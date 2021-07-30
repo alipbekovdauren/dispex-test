@@ -26,46 +26,36 @@ export default function (state = initialState, action) {
     case GET_FLATS:
       return {
         ...state,
-        flat: null,
-        flats: payload.reduce(function (r, a) {
-          r[a.houseId] = r[a.houseId] || [];
-          r[a.houseId].push(a);
-          return r;
-        }, Object.create(null)),
+        flats: payload,
         loading: false,
       };
     case CREATE_FLAT_CLIENT:
       return {
         ...state,
-        flats: {
-          ...state.flats,
-          [payload.houseId]: state.flats[payload.houseId].map((flat) => {
-            if (flat.addressId !== payload.addressId) {
-              return {
-                ...flat,
-              };
-            }
-
+        flats: state.flats.map((flat) => {
+          if (flat.addressId !== payload.addressId) {
             return {
               ...flat,
-              clients: [...flat.clients, payload.client],
             };
-          }),
-        },
+          }
+
+          return {
+            ...flat,
+            clients: [...flat.clients, payload.client],
+          };
+        }),
         loading: false,
       };
     case DELETE_FLAT_CLIENT:
       return {
         ...state,
-        flats: {
-          ...state.flats,
-          [payload.houseId]: state.flats[payload.houseId].map((flat) => ({
-            ...flat,
-            clients: flat.clients.filter(
-              (client) => client.bindId !== payload.bindId
-            ),
-          })),
-        },
+        flats: state.flats.map((flat) => ({
+          ...flat,
+          clients: flat.clients.filter(
+            (client) => client.bindId !== payload.bindId
+          ),
+        })),
+
         loading: false,
       };
     case TOGGLE_FLAT:

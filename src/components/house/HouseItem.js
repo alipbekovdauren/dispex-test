@@ -8,14 +8,10 @@ import FlatList from "../flat/FlatList";
 
 const HouseItem = ({ house }) => {
   const dispatch = useDispatch();
-  const selectedCompany = useSelector((state) => state.company.selectedCompany);
-  const selectedStreet = useSelector((state) => state.street.selectedStreet);
   const selectedHouse = useSelector((state) => state.house.selectedHouse);
 
   const onHouseClickHandler = (house) => {
     let data = {
-      companyId: selectedCompany,
-      streetId: selectedStreet,
       houseId: house.id,
     };
 
